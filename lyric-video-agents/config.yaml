@@ -1,0 +1,94 @@
+# Lyric Video Generator Configuration
+version: "1.0.0"
+
+# Video Settings
+video:
+  resolution: "1920x1080"  # or "3840x2160" for 4K
+  fps: 60
+  codec: "libx264"
+  audio_codec: "aac"
+  bitrate: "8000k"  # High quality
+  preset: "slow"  # Better compression/quality
+  pixel_format: "yuv420p"
+
+# Font Settings
+font:
+  family: "edosz"  # Default font from your collection
+  path: "assets/fonts/edosz.ttf"
+  size: 60  # 60px as requested
+  color: "#FFFFFF"
+  highlight_color: "#FFD700"  # Gold highlight for active words
+  shadow_color: "#000000"
+  shadow_offset: 2
+  shadow_blur: 4
+
+# Animation Settings
+animation:
+  scroll_speed: 0.14  # Smooth lerp factor (from workspace zip)
+  word_highlight_style: "fill"  # fill, fade, or glow
+  active_line_scale: 1.0
+  inactive_line_scale: 0.97
+  inactive_opacity: 0.4
+  blur_amount: 6  # Max blur for inactive lines
+  transition_duration: 0.5  # seconds
+
+# Background Settings
+background:
+  default_style: "image"  # image, gradient, or blur
+  blur_radius: 20
+  dim_opacity: 0.3
+  vignette_strength: 0.55
+
+# API Keys (Set these in .env file)
+api:
+  genius_token: ""  # Genius API token
+  spotify_client_id: ""
+  spotify_client_secret: ""
+  unsplash_access_key: ""
+  pexels_api_key: ""
+  youtube_client_secrets: "client_secrets.json"
+
+# Hanit API
+hanit_api:
+  base_url: "https://hanit-api.vercel.app/api/v1"
+  get_song_data: "/getSongData"
+
+# YouTube Upload Settings
+youtube:
+  category: "10"  # Music
+  privacy_status: "public"  # public, private, or unlisted
+  auto_upload: false  # Set to true to enable auto-upload
+
+# Paths
+paths:
+  audio_dir: "assets/audio"
+  background_dir: "assets/backgrounds"
+  output_dir: "assets/output"
+  temp_dir: "/tmp/lyric-video-gen"
+
+# Agent Settings
+agents:
+  audio_agent:
+    enabled: true
+    sources: ["youtube", "spotify"]
+    quality: "best"
+  
+  lrc_agent:
+    enabled: true
+    sources: ["hanit_api", "genius", "lrclib"]
+    fallback_to_sync: true
+  
+  background_agent:
+    enabled: true
+    sources: ["unsplash", "pexels", "local"]
+    min_resolution: "1920x1080"
+    no_watermark: true
+  
+  seo_agent:
+    enabled: true
+    generate_timestamps: true
+    optimize_tags: true
+  
+  youtube_uploader:
+    enabled: false  # Enable when ready
+    auto_generate_thumbnail: true
